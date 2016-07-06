@@ -1,4 +1,4 @@
-# nAddContent
+# nSteps
 Angular 1.x component for creating steps ex. form wizzards. 
 Please notice that current version only supports one single instance.
 
