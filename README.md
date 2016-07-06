@@ -1,42 +1,55 @@
 # nAddContent
-[![Build Status](https://travis-ci.org/nodes-frontend/nAddContent.svg?branch=master)](https://travis-ci.org/nodes-frontend/nAddContent) [![Coverage Status](https://coveralls.io/repos/github/nodes-frontend/nAddContent/badge.svg?branch=master)](https://coveralls.io/github/nodes-frontend/nAddContent?branch=master)
+Angular 1.x component for creating steps ex. form wizzards. 
+Please notice that current version only supports one single instance.
 
-Add's content based on specified template
-
-![Screencapture GIF](https://raw.githubusercontent.com/nodes-frontend/nAddContent/master/demo.gif)
+![Screencapture GIF](https://raw.githubusercontent.com/nodes-frontend/nSteps/master/demo.gif)
 
 # Getting started
 ```bash
-npm install n-add-content --save
+npm install n-steps --save
 ```
 Inject module dependency
 
 ```js
-angular.module('app', ['nAddContent']);
+angular.module('app', ['nSteps']);
 ```
 
 # Usage
 The component comes with several directives: n-add-content-create, n-add-content-reset, n-add-content-remove and n-add-content-container 
-
-Specify the container which the content should be added to
+1) Init 
 ```html
-<div n-add-content-container></div>
+<div class="container" n-steps-container steps="demo.steps"></div>
+```
+```js
+...
+.controller('demoController', function() {
+    var vm = this;
+    vm.steps = [
+        {
+            name: 'Step 1',
+            template: 'demo-stepOne.html'
+        },
+        {
+            name: 'Step 2',
+            template: 'demo-stepTwo.html'
+        },
+        {
+            name: 'Step 3',
+            template: 'demo-stepThree.html'
+        }
+    ];
+});
+```
+2) Add controls to change the steps
+```html
+<button type="button" class="button" n-steps-change-step index="previous">Forrige</button>
+<button type="button" class="button" n-steps-change-step index="2">Step 3</button>
+<button type="button" class="button" n-steps-change-step index="next">Næste</button>
 ```
 
-Add control to add the content ex. button
-
+3) Show the navigation
 ```html
-<button type="button" class="button" n-add-content-create template="template.html">+ Add</button>
-```
-
-To reset the container content 
-```html
-<button type="button" class="button" n-add-content-reset>Clear all</button>
-```
-
-To remove a specific item, following can be used inside the items template
-```html
-<button type="button" class="button" n-add-content-remove uuid="{{nAddContentItem.uuid}}">Remove</button>
+<div n-steps-nav>Step {{nSteps.nav.currentIndex + 1}} / {{nSteps.nav.totalSteps}}</div>
 ```
 
 # Development
@@ -102,4 +115,4 @@ npm run test
 ### Watch
 ```bash
 npm run karma
-```# nSteps
+```
