@@ -4,7 +4,6 @@
   "description": "Angular 1.x component for creating steps ex. a form wizzard",
   "main": "index.js",
   "scripts": {
-    "install": "npm install jspm -g && jspm install",
     "commit": "./node_modules/.bin/git-cz",
     "test": "./node_modules/karma/bin/karma start karma.conf.js --single-run",
     "coveralls": "npm run test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
