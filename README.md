@@ -16,6 +16,7 @@ angular.module('app', ['nSteps']);
 
 # Usage
 The component comes with several directives: n-add-content-create, n-add-content-reset, n-add-content-remove and n-add-content-container 
+
 1) Init 
 ```html
 <div class="container" n-steps-container steps="demo.steps"></div>
