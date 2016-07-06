@@ -1,6 +1,5 @@
 {
   "name": "n-steps",
-  "version": "1.0.0",
   "description": "Angular 1.x component for creating steps ex. a form wizzard",
   "main": "index.js",
   "scripts": {
