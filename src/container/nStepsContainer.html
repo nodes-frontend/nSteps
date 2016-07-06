@@ -1,7 +1,1 @@
-<div class="nAddContentContainer">
-
-    <div uuid="{{nAddContentItem.uuid}}" ng-include="nAddContentItem.template" ng-repeat="nAddContentItem in NAddContentContainer.items">
-        <p>{{item}}</p>
-    </div>
-
-</div>
+<div ng-include="NStepsContainer.NStepsService.currentStep.template"></div>

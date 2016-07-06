@@ -1,92 +1,104 @@
-namespace nAddContent {
+namespace nSteps {
     'use strict';
 
-    export interface INAddContentServiceItem {
-        uuid: string;
+    export interface INStep {
+        name: string;
         template: string;
-        guid: () => String;
     }
 
-    class NAddContentServiceItem implements INAddContentServiceItem {
-        private uuid: string;
+    class NStep implements INStep {
+        private name: string;
         private template: string;
 
-        constructor(private template) {
-            if(!template) throw 'Template is required!!!';
-            this.uuid = this.guid();
+        constructor(step: INStep) {
+            this.validate(step);
+            this.name       = step.name;
+            this.template   = step.template;
         }
 
-        private guid(): String {
-            function s4() {
-                return Math.floor((1 + Math.random()) * 0x10000)
-                    .toString(16)
-                    .substring(1);
-            }
-            return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-                s4() + '-' + s4() + s4() + s4();
+        private validate(step: INStep) {
+            // Check if step isset && if step is an object
+            if(!step || typeof step !== 'object') throw 'Step needs to be an object!!!';
+
+            // Check if step has a template property
+            if( !step.hasOwnProperty('template') ) throw 'Template is required!!!';
+
+            // Check if step.template is empty
+            if(step.template === '') throw 'Template cannot be empty!!!';
         }
     }
 
-    export interface INAddContentService {
-        create: (template) => INAddContentServiceItem;
-        add: (item) => Array<INAddContentServiceItem>;
-        getByUUID: (uuid) => Object;
-        removeByUUID: (uuid) => Object;
-        reset: () => Boolean
+    export interface INStepsService {
+        steps: Array<INStep>;
+        totalSteps: number;
+        currentIndex: number;
+        currentStep: INStep;
+        init: (steps) => Array<INStep>;
+        createStep: (step) => Array<INStep>;
+        changeStep: (index) => INStep;
+        nextStep: () => INStep;
+        previousStep: () => INStep;
     }
 
-    class NAddContentService implements INAddContentService {
+    class NStepsService implements INStepsService {
 
         static $inject: Array<string> = ['$rootScope'];
         constructor(private $rootScope: any){}
 
-        public items: Array<INAddContentServiceItem> = [];
+        private steps: Array<INStep> = [];
+        private totalSteps: number = 0;
+        private currentIndex: number = 0;
+        private currentStep: INStep;
 
-        private create(template): INAddContentServiceItem {
-            return new NAddContentServiceItem(template);
+        private createStep(step: INStep): Array<INStep> {
+            const step = new NStep(step);
+
+            // If no steps has been created yet, set currentStep
+            if(this.steps.length === 0) {
+                this.currentIndex   = 0;
+                this.currentStep    = step;
+            }
+
+            this.steps.push(step);
+            this.totalSteps++;
+
+            return this.steps;
         }
-        
-        add(item): Array<INAddContentServiceItem> {
-            if(!item) throw 'Item is required!!!';
-            if( !item.hasOwnProperty('template') ) throw 'Item template is required!!!';
-            if( !item.hasOwnProperty('uuid') ) throw 'Item uuid is required!!!';
 
-            this.items.push(item);
+        init(steps: Array<INStep>): Array<INStep> {
+            const self = this;
+            steps.forEach((step) => {
+                self.createStep(step);
+            });
+            return this.steps;
+        }
+
+        changeStep(index = this.currentIndex): INStep {
+            index = Math.max(0, index);
+            index = Math.min(index, this.steps.length - 1);
+
+            this.currentIndex   = index;
+            this.currentStep    = this.steps[this.currentIndex];
+
             this.$rootScope.$apply();
 
-            return this.items;
+            return this.currentStep;
         }
 
-        getByUUID(uuid): INAddContentServiceItem {
-            if(!uuid) throw 'UUID is required!!!';
-
-            const item = this.items.filter((item) => {
-                return item.uuid === uuid;
-            })[0];
-
-            if(!item) throw 'UUID was not found!!!';
-            return item;
+        nextStep(): INStep {
+            this.currentIndex++;
+            return this.changeStep();
         }
 
-        removeByUUID(uuid): INAddContentServiceItem {
-            const item  = this.getByUUID(uuid);
-            const index = this.items.indexOf(item);
-
-            this.items.splice(index, 1);
-            this.$rootScope.$apply();
-
-            return item;
-        }
-
-        reset(): Boolean {
-            this.items.splice(0, this.items.length);
-            this.$rootScope.$apply();
-            return this.items.length === 0;
+        previousStep(): INStep {
+            console.log('previous')
+            this.currentIndex--;
+            return this.changeStep();
         }
     }
 
     angular
-        .module('nAddContent')
-        .service('NAddContentService', NAddContentService);
+        .module('nSteps')
+        .service('NStepsService', NStepsService);
 }
 

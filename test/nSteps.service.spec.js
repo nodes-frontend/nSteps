@@ -3,8 +3,22 @@
 describe('NStepsService', () => {
 
 	const templateRequiredError = 'Template is required!!!';
-	const templateEmptyError = 'Template cannot be empty!!!';
-	const typeofStepError = 'Step needs to be an object!!!';
+	const templateEmptyError 	= 'Template cannot be empty!!!';
+	const typeofStepError 		= 'Step needs to be an object!!!';
+	const steps 				= [
+		{
+			name: 'Step 1',
+			template: 'templateOne.html'
+		},
+		{
+			name: 'Step 2',
+			template: 'templateTwo.html'
+		},
+		{
+			name: 'Step 3',
+			template: 'templateThree.html'
+		}
+	];
 
 	let NStepsService;
 
@@ -23,10 +37,7 @@ describe('NStepsService', () => {
 
 	it('Should create step', () => {
 		const currentAmountOfSteps 	= NStepsService.steps.length;
-		const step 					= {
-			name	: 'Step 1',
-			template: 'template.html'
-		};
+		const step 					= steps[0];
 
 		NStepsService.createStep(step);
 
@@ -61,35 +72,13 @@ describe('NStepsService', () => {
 
 	it('Should create steps', () => {
 		const currentAmountOfSteps 	= NStepsService.steps.length;
-		const steps = [
-			{
-				name: 'Step 1',
-				template: 'templateOne.html'
-			},
-			{
-				name: 'Step 2',
-				template: 'templateTwo.html'
-			}
-		];
-
-		NStepsService.createSteps(steps);
+		NStepsService.init(steps);
 
 		expect(NStepsService.steps.length).toEqual(currentAmountOfSteps + steps.length);
 	});
 
 	it('Should set current step, to first step', () => {
-		const steps = [
-			{
-				name: 'Step 1',
-				template: 'templateOne.html'
-			},
-			{
-				name: 'Step 2',
-				template: 'templateTwo.html'
-			}
-		];
-
-		NStepsService.createSteps(steps);
+		NStepsService.init(steps);
 		const actual = NStepsService.currentStep;
 		
 		expect(actual.name).toEqual(steps[0].name);
@@ -97,18 +86,7 @@ describe('NStepsService', () => {
 	});
 
 	it('Should go to next step', () => {
-		const steps = [
-			{
-				name: 'Step 1',
-				template: 'templateOne.html'
-			},
-			{
-				name: 'Step 2',
-				template: 'templateTwo.html'
-			}
-		];
-
-		NStepsService.createSteps(steps);
+		NStepsService.init(steps);
 		NStepsService.nextStep();
 
 		const actual = NStepsService.currentStep;
@@ -118,26 +96,70 @@ describe('NStepsService', () => {
 	});
 
 	it('Should stay on current step, if current step is the last step', () => {
-		expect(0).toEqual(1);
+		NStepsService.init(steps);
+		NStepsService.nextStep();
+		NStepsService.nextStep();
+
+		const actual 	= NStepsService.currentStep;
+		const expected 	= steps[steps.length - 1];
+
+		expect(actual.name).toEqual(expected.name);
+		expect(actual.template).toEqual(expected.template);
 	});
 
-	it('Should throw error if step does not exist', () => {
-		expect(0).toEqual(1);
-	});
+	it('Should return current step, when going to next step', () => {
+		NStepsService.init(steps);
 
-	it('Should prevent going to next step, if step is invalid', () => {
-		expect(0).toEqual(1);
+		const actual 	= NStepsService.nextStep();
+		const expected 	= NStepsService.currentStep;
+
+		expect(actual).toEqual(expected);
 	});
 
 	it('Should go to previous step', () => {
-		expect(0).toEqual(1);
+		NStepsService.init(steps);
+		NStepsService.nextStep();
+		NStepsService.previousStep();
+
+		const actual = NStepsService.currentStep;
+
+		expect(actual.name).toEqual(steps[0].name);
+		expect(actual.template).toEqual(steps[0].template);
 	});
 
 	it('Should stay on current step, if current step is the first step', () => {
-		expect(0).toEqual(1);
+		NStepsService.init(steps);
+
+		expect(() => NStepsService.previousStep() ).not.toThrow();
+		expect(NStepsService.currentStep.name).toEqual(steps[0].name);
+		expect(NStepsService.currentStep.template).toEqual(steps[0].template);
 	});
 
-	it('Should go to specified step', () => {
-		expect(0).toEqual(1);
+	it('Should go to specified step index', () => {
+		NStepsService.init(steps);
+
+		expect(() => NStepsService.changeStep(1) ).not.toThrow();
+		expect(NStepsService.currentStep.name).toEqual(steps[1].name);
+		expect(NStepsService.currentStep.template).toEqual(steps[1].template);
+	});
+
+	it('Should go to last step, if index more than amount of steps', () => {
+		NStepsService.init(steps);
+
+		expect(() => NStepsService.changeStep(steps.length) ).not.toThrow();
+
+		const actual = NStepsService.currentStep;
+		const expected = steps[steps.length - 1];
+
+		expect(actual.name).toEqual(expected.name);
+		expect(actual.template).toEqual(expected.template);
+	});
+
+	it('Should go to first step, if index is less than 0', () => {
+		NStepsService.init(steps);
+
+		expect(() => NStepsService.changeStep(-1) ).not.toThrow();
+		expect(NStepsService.currentStep.name).toEqual(steps[0].name);
+		expect(NStepsService.currentStep.template).toEqual(steps[0].template);
 	});
 });

@@ -1,39 +1,47 @@
-namespace nAddContent {
+namespace nSteps {
     'use strict';
 
-    const controllerAs = 'NAddContentRemove';
+    const controllerAs = 'NStepsChangeStep';
 
-    class NAddContentRemove implements ng.IDirective {
+    class NStepsChangeStep implements ng.IDirective {
         static $inject: Array<string> = [];
         constructor() {}
 
         static instance(): ng.IDirective {
-            return new NAddContentRemove();
+            return new NStepsChangeStep();
         }
 
         bindToController: boolean = true;
         link: (scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => void = this.linkFn;
-        controller: NAddContentRemoveController = NAddContentRemoveController;
+        controller: NStepsChangeStepController = NStepsChangeStepController;
         restrict: string = 'EA';
         controllerAs: string = controllerAs;
 
         private linkFn(scope: any, element: any, attrs: any) {
             element.on('click', () => {
-                scope[controllerAs].remove(attrs.uuid);
+                scope[controllerAs].change(attrs.index);
             });
         }
     }
 
-    class NAddContentRemoveController {
-        static $inject: Array<string> = ['NAddContentService'];
-        constructor(private NAddContentService: INAddContentService) {}
+    class NStepsChangeStepController {
+        static $inject: Array<string> = ['NStepsService'];
+        constructor(private NStepsService: INStepsService) {}
 
-        remove(uuid) {
-            this.NAddContentService.removeByUUID(uuid);
+        change(index) {
+            if(index === 'next') {
+                console.log('NEXT');
+                this.NStepsService.nextStep();
+            } else if(index === 'previous') {
+                console.log('previous');
+                this.NStepsService.previousStep();
+            } else {
+                this.NStepsService.changeStep(index);
+            }
         }
     }
 
     angular
-        .module('nAddContent')
-        .directive('nAddContentRemove', NAddContentRemove.instance);
+        .module('nSteps')
+        .directive('nStepsChangeStep', NStepsChangeStep.instance);
 }

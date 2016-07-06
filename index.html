@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>nSteps</title>
+        <link rel="stylesheet" href="dist/component.css">
+    </head>
+    <body ng-app="demoApp">
+        <div ng-controller="demoController as demo">
+
+            <h1>nSteps</h1>
+
+            <div n-steps-nav>Step {{nSteps.nav.currentIndex + 1}} / {{nSteps.nav.totalSteps}}</div>
+
+            <button type="button" class="button" n-steps-change-step index="previous">Forrige</button>
+            <button type="button" class="button" n-steps-change-step index="2">Step 3</button>
+            <button type="button" class="button" n-steps-change-step index="next">Næste</button>
+
+            <div class="container" n-steps-container steps="demo.steps"></div>
+
+        </div>
+
+        <script src="node_modules/angular/angular.js"></script>
+
+        <!-- component.js will be used on dev, in production it will be rewrited to minfied version component.min.js -->
+        <script src="dist/component.js"></script>
+
+        <script>
+            (function() {
+
+                angular.module('demoApp', ['nSteps']);
+
+                angular
+                    .module('demoApp')
+                    .controller('demoController', function() {
+                        var vm = this;
+
+                        vm.steps = [
+                            {
+                                name: 'Step 1',
+                                template: 'demo-stepOne.html'
+                            },
+                            {
+                                name: 'Step 2',
+                                template: 'demo-stepTwo.html'
+                            },
+                            {
+                                name: 'Step 3',
+                                template: 'demo-stepThree.html'
+                            }
+                        ];
+                    });
+
+            })();
+        </script>
+    </body>
+</html>

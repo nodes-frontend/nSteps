@@ -1,36 +1,48 @@
-namespace nAddContent {
+namespace nSteps {
     'use strict';
 
-    const controllerAs = 'NAddContentContainer';
+    const controllerAs = 'NStepsContainer';
 
-    class NAddContentContainer implements ng.IDirective {
+    interface INStepsContainerScope {
+        steps: any
+    }
+
+    class NStepsContainer implements ng.IDirective {
         static $inject: Array<string> = [];
         constructor() {}
 
         static instance(): ng.IDirective {
-            return new NAddContentContainer();
+            return new NStepsContainer();
         }
 
         bindToController: boolean = true;
         link: (scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => void = this.linkFn;
-        controller: NAddContentContainerController = NAddContentContainerController;
+        controller: NStepsContainerController = NStepsContainerController;
         restrict: string = 'EA';
-        templateUrl: string = 'src/container/nAddContentContainer.html';
+        templateUrl: string = 'src/container/nStepsContainer.html';
         controllerAs: string = controllerAs;
+        scope: INStepsContainerScope = {
+            steps: '=',
+        };
 
         private linkFn(scope: any, element: any, attrs: any) {}
     }
 
-    class NAddContentContainerController {
-        private items: Array<INAddContentServiceItem>;
+    class NStepsContainerController {
+        private step: INStep;
+        private steps: Array<INStep>;
 
-        static $inject: Array<string> = ['NAddContentService'];
-        constructor(private NAddContentService: any) {
-            this.items = this.NAddContentService.items;
+        static $inject: Array<string> = ['NStepsService'];
+        constructor(private NStepsService: any) {
+            // If steps are provided init nStepsService
+            if(this.steps) {
+                this.NStepsService.init(this.steps);
+            }
+            //this.step = this.NStepsService.currentStep;
         }
     }
 
     angular
-        .module('nAddContent')
-        .directive('nAddContentContainer', NAddContentContainer.instance);
+        .module('nSteps')
+        .directive('nStepsContainer', NStepsContainer.instance);
 }

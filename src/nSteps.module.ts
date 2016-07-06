@@ -1,7 +1,7 @@
-namespace nAddContent {
+namespace nSteps {
 	'use strict';
 	
 	const dependencies = [];
 
-	angular.module('nAddContent', dependencies);
+	angular.module('nSteps', dependencies);
 }
