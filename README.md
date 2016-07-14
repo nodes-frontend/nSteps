@@ -21,7 +21,7 @@ The component comes with several directives: n-add-content-create, n-add-content
 
 1) Init 
 ```html
-<div class="container" n-steps-container steps="demo.steps"></div>
+<div class="container" n-steps-container></div>
 ```
 ```js
 ...
@@ -41,6 +41,12 @@ The component comes with several directives: n-add-content-create, n-add-content
             template: 'demo-stepThree.html'
         }
     ];
+    
+    activate();
+
+    function activate() {
+        NStepsService.init(vm.steps);
+    }
 });
 ```
 2) Add controls to change the steps

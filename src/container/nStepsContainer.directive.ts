@@ -21,10 +21,7 @@ namespace nSteps {
         restrict: string = 'EA';
         templateUrl: string = 'src/container/nStepsContainer.html';
         controllerAs: string = controllerAs;
-        scope: INStepsContainerScope = {
-            steps: '=',
-        };
-
+        
         private linkFn(scope: any, element: any, attrs: any) {}
     }
 
@@ -33,13 +30,7 @@ namespace nSteps {
         private steps: Array<INStep>;
 
         static $inject: Array<string> = ['NStepsService'];
-        constructor(private NStepsService: any) {
-            // If steps are provided init nStepsService
-            if(this.steps) {
-                this.NStepsService.init(this.steps);
-            }
-            //this.step = this.NStepsService.currentStep;
-        }
+        constructor(private NStepsService: any) {}
     }
 
     angular

@@ -130,7 +130,6 @@ $__System.register("5", [], function(exports_1, context_1) {
             this.restrict = 'EA';
             this.templateUrl = 'src/container/nStepsContainer.html';
             this.controllerAs = controllerAs;
-            this.scope = {steps: '='};
           }
           NStepsContainer.instance = function() {
             return new NStepsContainer();
@@ -142,9 +141,6 @@ $__System.register("5", [], function(exports_1, context_1) {
         var NStepsContainerController = (function() {
           function NStepsContainerController(NStepsService) {
             this.NStepsService = NStepsService;
-            if (this.steps) {
-              this.NStepsService.init(this.steps);
-            }
           }
           NStepsContainerController.$inject = ['NStepsService'];
           return NStepsContainerController;

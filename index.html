@@ -16,7 +16,7 @@
             <button type="button" class="button" n-steps-change-step index="2">Step 3</button>
             <button type="button" class="button" n-steps-change-step index="next">Næste</button>
 
-            <div class="container" n-steps-container steps="demo.steps"></div>
+            <div class="container" n-steps-container></div>
 
         </div>
 
@@ -32,8 +32,12 @@
 
                 angular
                     .module('demoApp')
-                    .controller('demoController', function() {
+                    .controller('demoController', function(NStepsService) {
                         var vm = this;
+
+                        vm.data = {
+                            test: 'dummy data'
+                        };
 
                         vm.steps = [
                             {
@@ -49,6 +53,13 @@
                                 template: 'demo-stepThree.html'
                             }
                         ];
+
+                        activate();
+
+                        function activate() {
+                            NStepsService.init(vm.steps);
+                        }
+
                     });
 
             })();
