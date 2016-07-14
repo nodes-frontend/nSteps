@@ -27,6 +27,7 @@ var config = {
 		dist: './tmp',
 		options: {
 			filename: 'templates.ts',
+			module: 'nSteps.templates',
 			root: 'src',
 			standalone: true,
 			templateHeader: 'export default angular.module("<%= module %>"<%= standalone %>).run(["$templateCache", function($templateCache) {'

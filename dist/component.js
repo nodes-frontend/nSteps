@@ -8,7 +8,7 @@ $__System.register("2", [], function(exports_1, context_1) {
   return {
     setters: [],
     execute: function() {
-      exports_1("default", angular.module("templates", []).run(["$templateCache", function($templateCache) {
+      exports_1("default", angular.module("nSteps.templates", []).run(["$templateCache", function($templateCache) {
         $templateCache.put("src/container/nStepsContainer.html", "<div ng-include=\"NStepsContainer.NStepsService.currentStep.template\"></div>");
         $templateCache.put("src/navigation/nStepNavigation.html", "<h1>I\'m the navigation</h1>");
       }]));
@@ -26,7 +26,7 @@ $__System.register("3", [], function(exports_1, context_1) {
       var nSteps;
       (function(nSteps) {
         'use strict';
-        var dependencies = [];
+        var dependencies = ['nSteps.templates'];
         angular.module('nSteps', dependencies);
       })(nSteps || (nSteps = {}));
     }

@@ -23,7 +23,7 @@ describe('NStepsService', () => {
 	let NStepsService;
 
 	beforeEach(() => {
-		angular.module('templates', []);
+		angular.module('nSteps.templates', []);
 		module('nSteps');
 	});
 
