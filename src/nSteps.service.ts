@@ -91,7 +91,6 @@ namespace nSteps {
         }
 
         previousStep(): INStep {
-            console.log('previous')
             this.currentIndex--;
             return this.changeStep();
         }

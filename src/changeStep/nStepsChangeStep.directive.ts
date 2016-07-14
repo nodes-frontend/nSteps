@@ -30,10 +30,8 @@ namespace nSteps {
 
         change(index) {
             if(index === 'next') {
-                console.log('NEXT');
                 this.NStepsService.nextStep();
             } else if(index === 'previous') {
-                console.log('previous');
                 this.NStepsService.previousStep();
             } else {
                 this.NStepsService.changeStep(index);

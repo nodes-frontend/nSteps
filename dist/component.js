@@ -99,7 +99,6 @@ $__System.register("4", [], function(exports_1, context_1) {
             return this.changeStep();
           };
           NStepsService.prototype.previousStep = function() {
-            console.log('previous');
             this.currentIndex--;
             return this.changeStep();
           };
@@ -192,10 +191,8 @@ $__System.register("6", [], function(exports_1, context_1) {
           }
           NStepsChangeStepController.prototype.change = function(index) {
             if (index === 'next') {
-              console.log('NEXT');
               this.NStepsService.nextStep();
             } else if (index === 'previous') {
-              console.log('previous');
               this.NStepsService.previousStep();
             } else {
               this.NStepsService.changeStep(index);
