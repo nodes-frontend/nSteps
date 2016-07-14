@@ -77,11 +77,18 @@ $__System.register("4", [], function(exports_1, context_1) {
             return this.steps;
           };
           NStepsService.prototype.init = function(steps) {
+            this.reset();
             var self = this;
             steps.forEach(function(step) {
               self.createStep(step);
             });
             return this.steps;
+          };
+          NStepsService.prototype.reset = function() {
+            this.steps = [];
+            this.totalSteps = 0;
+            this.currentIndex = 0;
+            this.currentStep = undefined;
           };
           NStepsService.prototype.changeStep = function(index) {
             if (index === void 0) {

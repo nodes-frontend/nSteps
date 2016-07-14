@@ -25,7 +25,7 @@ The component comes with several directives: n-add-content-create, n-add-content
 ```
 ```js
 ...
-.controller('demoController', function() {
+.controller('demoController', function(NStepsService) {
     var vm = this;
     vm.steps = [
         {

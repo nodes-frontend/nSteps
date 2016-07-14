@@ -66,11 +66,20 @@ namespace nSteps {
         }
 
         init(steps: Array<INStep>): Array<INStep> {
+            this.reset();
+
             const self = this;
             steps.forEach((step) => {
                 self.createStep(step);
             });
             return this.steps;
+        }
+
+        reset() {
+            this.steps          = [];
+            this.totalSteps     = 0;
+            this.currentIndex   = 0;
+            this.currentStep    = undefined;
         }
 
         changeStep(index = this.currentIndex): INStep {

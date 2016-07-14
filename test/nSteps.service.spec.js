@@ -77,6 +77,13 @@ describe('NStepsService', () => {
 		expect(NStepsService.steps.length).toEqual(currentAmountOfSteps + steps.length);
 	});
 
+	it('Should reset to defaults before, initializing new steps', () => {
+		NStepsService.init(steps);
+		NStepsService.init(steps);
+		
+		expect(NStepsService.steps.length).toEqual(steps.length);
+	});
+
 	it('Should set current step, to first step', () => {
 		NStepsService.init(steps);
 		const actual = NStepsService.currentStep;
