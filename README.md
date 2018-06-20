@@ -1,4 +1,6 @@
-# ⛔️ [DEPRECATED] nSteps
+# nSteps
+_Not maintained by Nodes anymore_
+
 [![Build Status](https://travis-ci.org/nodes-frontend/nSteps.svg?branch=master)](https://travis-ci.org/nodes-frontend/nSteps) [![Coverage Status](https://coveralls.io/repos/github/nodes-frontend/nSteps/badge.svg?branch=master)](https://coveralls.io/github/nodes-frontend/nSteps?branch=master)
 
 Angular 1.x component for creating steps ex. form wizzards. 
